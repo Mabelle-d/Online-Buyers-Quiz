@@ -40,7 +40,7 @@
                 return;
             }
 
-            var apiUrl = "YOUR_GOOGLE_SCRIPT_URL?id=" + quizId; // Replace with your Google Web App URL
+            var apiUrl = "https://script.google.com/macros/s/AKfycbxxvj1VA9Zyc38VUxDMLrawM7bTue6tWToC0_syGWnpBbs_f9klazXmM32SShn4czzXQQ/exec?id=" + quizId; // Replace with your Google Web App URL
             
             fetch(apiUrl)
                 .then(response => response.json())
