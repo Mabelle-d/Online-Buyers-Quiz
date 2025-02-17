@@ -40,13 +40,16 @@
                 return;
             }
 
-            var apiUrl = "https://script.google.com/macros/s/AKfycbxxvj1VA9Zyc38VUxDMLrawM7bTue6tWToC0_syGWnpBbs_f9klazXmM32SShn4czzXQQ/exec?id=" + quizId; // Replace with your Google Web App URL
+           var apiUrl = "https://script.google.com/macros/s/AKfycbzbRkVBkaN3e7pbwakRfztvu-9cGHscETed3K3oLFchqiWzYO0xJJMm5ZaMZqv5QcT3Pw/exec?id=" + quizId;
             
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === "success") {
-                        document.getElementById("result").innerHTML = "Your Quiz Result: " + data.result;
+                        document.getElementById("result").innerHTML = 
+                            "<strong>Question:</strong> " + data.question + "<br>" +
+                            "<strong>Your Answer:</strong> " + data.userAnswer + "<br>" +
+                            "<strong>Feedback:</strong> " + data.feedback;
                     } else {
                         document.getElementById("result").innerHTML = "Error: " + data.message;
                     }
