@@ -1,64 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        input {
-            padding: 10px;
-            width: 200px;
-            margin: 10px;
-        }
-        button {
-            padding: 10px;
-            cursor: pointer;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <h2>Check Your Quiz Results</h2>
-    <input type="text" id="quizId" placeholder="Enter your Quiz ID">
-    <button onclick="fetchResult()">Get Result</button>
-    <p id="result"></p>
-
-    <script>
-        function fetchResult() {
-            var quizId = document.getElementById("quizId").value;
-            if (!quizId) {
-                alert("Please enter a valid Quiz ID!");
-                return;
-            }
-
-           var apiUrl = "https://script.google.com/macros/s/AKfycbz061yVo8q34lUZnuSeL0ECsUNtUI1-FwbhGyi0QjGcNqX77jPgr4TETPWF7h2VjlUEoA/exec?id=" + quizId;
-            
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === "success") {
-                        document.getElementById("result").innerHTML = 
-                            "<strong>Question:</strong> " + data.question + "<br>" +
-                            "<strong>Your Answer:</strong> " + data.userAnswer + "<br>" +
-                            "<strong>Feedback:</strong> " + data.feedback;
-                    } else {
-                        document.getElementById("result").innerHTML = "Error: " + data.message;
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching result:", error);
-                    document.getElementById("result").innerHTML = "An error occurred!";
-                });
-        }
-    </script>
-</body>
+<html>
+  <body>
+    <h1>Top Neighborhood Recommendation</h1>
+    <div id="neighborhood-result">
+      <!-- This will be dynamically updated with the top neighborhood -->
+    </div>
+    <p>Want to see the rest of the results? Enter your email below:</p>
+    <form id="email-form">
+      <input type="email" id="user-email" required placeholder="Enter your email">
+      <button type="submit">Get Full Results</button>
+    </form>
+  </body>
+  <script>
+    // Add code to fetch top result dynamically from Google Sheets or similar
+    document.getElementById("neighborhood-result").innerHTML = "Top Neighborhood: [Fetch from Sheets]";
+  </script>
 </html>
