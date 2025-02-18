@@ -1,17 +1,28 @@
+<!DOCTYPE html>
 <html>
-  <body>
-    <h1>Top Neighborhood Recommendation</h1>
-    <div id="neighborhood-result">
-      <!-- This will be dynamically updated with the top neighborhood -->
-    </div>
-    <p>Want to see the rest of the results? Enter your email below:</p>
-    <form id="email-form">
-      <input type="email" id="user-email" required placeholder="Enter your email">
-      <button type="submit">Get Full Results</button>
-    </form>
-  </body>
-  <script>
-    // Add code to fetch top result dynamically from Google Sheets or similar
-    document.getElementById("neighborhood-result").innerHTML = "Top Neighborhood: [Fetch from Sheets]";
-  </script>
+<head>
+    <title>Neighborhood Recommendation</title>
+    <script>
+        async function fetchTop1Result() {
+            const response = await fetch('https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbw6eupnHRuhf1CEvkfbPuuFWhx6cV4nYUcvH2KnRz7eltNQWYXjyyxjriiI4eoibCgt/exec/exec');
+            const data = await response.json();
+            document.getElementById("result").innerText = data.top1;
+        }
+
+        function submitEmail() {
+            const email = document.getElementById("email").value;
+            fetch('https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec?email=' + email)
+                .then(response => response.text())
+                .then(data => alert("Email submitted! You'll receive full recommendations shortly."));
+        }
+    </script>
+</head>
+<body onload="fetchTop1Result()">
+    <h1>Your Top Neighborhood Recommendation</h1>
+    <p id="result">Loading...</p>
+    
+    <h2>Want the full list?</h2>
+    <input type="email" id="email" placeholder="Enter your email">
+    <button onclick="submitEmail()">Get Full Recommendations</button>
+</body>
 </html>
