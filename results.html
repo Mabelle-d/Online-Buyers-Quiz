@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neighborhood Recommendation</title>
+</head>
+<body>
+    <h1>Find Your Recommended Neighborhood</h1>
+    <input type="text" id="user-id" placeholder="Enter Your Unique ID">
+    <button onclick="fetchResults()">Get My Result</button>
+
+    <div id="result"></div>
+
+    <script>
+        function fetchResults() {
+            var userId = document.getElementById("user-id").value;
+            var apiUrl = "https://script.google.com/macros/s/AKfycby31gKH5UtdbBUQyB3gUoD-UfcpnKBffstFm8PVIGMdfSFxGE3K_kXMdcXcPVfqm782/exec";
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data[userId]) {
+                        document.getElementById("result").innerHTML = `
+                            <h2>${data[userId].top_neighborhood}</h2>
+                            <p>${data[userId].description}</p>
+                            <p><strong>Why? </strong>${data[userId].reason}</p>
+                        `;
+                    } else {
+                        document.getElementById("result").innerHTML = "No results found for this ID.";
+                    }
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        }
+    </script>
+</body>
+</html>
