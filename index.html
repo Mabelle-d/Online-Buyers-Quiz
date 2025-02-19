@@ -3,26 +3,45 @@
 <head>
     <title>Neighborhood Recommendation</title>
     <script>
-        async function fetchTop1Result() {
-            const response = await fetch('https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbw6eupnHRuhf1CEvkfbPuuFWhx6cV4nYUcvH2KnRz7eltNQWYXjyyxjriiI4eoibCgt/exec/exec');
+        async function fetchTop1() {
+            const userID = document.getElementById("userID").value;
+            if (!userID) {
+                alert("Please enter a valid ID.");
+                return;
+            }
+
+            const response = await fetch(`https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwLWAjCnZOn7K_eh26dxE7lJ014yBDKTny47BUKkm5zydySGV8YC8ckk7eWSwcPyKWIKg/exec/exec?id=${userID}`);
             const data = await response.json();
-            document.getElementById("result").innerText = data.top1;
+            if (data.top1) {
+                document.getElementById("result").innerText = data.top1;
+                document.getElementById("emailSection").style.display = "block";
+            } else {
+                alert("No result found for this ID.");
+            }
         }
 
         function submitEmail() {
             const email = document.getElementById("email").value;
-            fetch('https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec?email=' + email)
+            const userID = document.getElementById("userID").value;
+            
+            fetch(`https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbwLWAjCnZOn7K_eh26dxE7lJ014yBDKTny47BUKkm5zydySGV8YC8ckk7eWSwcPyKWIKg/exec/exec?email=${email}&id=${userID}`)
                 .then(response => response.text())
                 .then(data => alert("Email submitted! You'll receive full recommendations shortly."));
         }
     </script>
 </head>
-<body onload="fetchTop1Result()">
-    <h1>Your Top Neighborhood Recommendation</h1>
-    <p id="result">Loading...</p>
+<body>
+    <h1>Find Your Top Neighborhood</h1>
+    <input type="text" id="userID" placeholder="Enter your custom ID">
+    <button onclick="fetchTop1()">Get Recommendation</button>
     
-    <h2>Want the full list?</h2>
-    <input type="email" id="email" placeholder="Enter your email">
-    <button onclick="submitEmail()">Get Full Recommendations</button>
+    <h2>Your Top 1 Recommendation:</h2>
+    <p id="result">...</p>
+
+    <div id="emailSection" style="display:none;">
+        <h2>Want the full list?</h2>
+        <input type="email" id="email" placeholder="Enter your email">
+        <button onclick="submitEmail()">Get Full Recommendations</button>
+    </div>
 </body>
 </html>
